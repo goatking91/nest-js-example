@@ -3,11 +3,11 @@ import {
   Controller,
   Delete,
   Get,
-  Header,
   HttpCode,
   Param,
   Patch,
   Post,
+  Redirect,
   Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -38,9 +38,15 @@ export class UsersController {
   //   return this.usersService.findOne(+id);
   // }
 
-  @Header('Custom', 'Test Header')
+  // @Header('Custom', 'Test Header')
+  // @Get(':id')
+  // findOneWithHeader(@Param('id') id: string) {
+  //   return this.usersService.findOne(+id);
+  // }
+
+  @Redirect('https://nestjs.com', 301)
   @Get(':id')
-  findOneWithHeader(@Param('id') id: string) {
+  findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 

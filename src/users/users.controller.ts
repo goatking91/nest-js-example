@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Redirect,
   Res,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Response } from 'express';
+import { GetUsersDto } from './dto/get-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -21,11 +23,14 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    const { name, email } = createUserDto;
+    return `유저를 생성했습니다. 이름: ${name}, 이메일: ${email}`;
   }
 
   @Get()
-  findAll(@Res() res: Response) {
+  findAll(@Res() res: Response, @Query() getUsersDto: GetUsersDto) {
+    const { offset, limit } = getUsersDto;
+    console.log(`offset - ${offset}, limit - ${limit}`);
     const users = this.usersService.findAll();
     return res.status(200).send(users);
   }

@@ -13,6 +13,7 @@ import { LoggerMiddleware } from './logger/logger.middleware';
 import { Logger2Middleware } from './logger/logger.middleware2';
 import { UsersController } from './users/users.controller';
 import authConfig from './config/authConfig';
+import { ExceptionModule } from './exception/exception.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import authConfig from './config/authConfig';
     //     }),
     //   ],
     // }),
+    ExceptionModule,
   ],
   controllers: [],
   providers: [],

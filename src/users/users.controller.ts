@@ -19,7 +19,7 @@ import { AuthGuard } from '../auth.guard';
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly usersService: UsersService, // @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: WinstonLogger, // @Inject(WINSTON_MODULE_NEST_PROVIDER) // private readonly logger: LoggerService,
+    private readonly usersService: UsersService, // @Inject(WINSTON_MODULE_PROVIDER) private readonly logging: WinstonLogger, // @Inject(WINSTON_MODULE_NEST_PROVIDER) // private readonly logging: LoggerService,
     @Inject(Logger) private readonly logger: LoggerService,
   ) {}
 
@@ -52,26 +52,26 @@ export class UsersController {
   }
 
   // private printWinstonLog(dto) {
-  //   // console.log(this.logger.name);
+  //   // console.log(this.logging.name);
   //
-  //   this.logger.error('error: ', dto);
-  //   this.logger.warn('warn: ', dto);
-  //   this.logger.info('info: ', dto);
-  //   this.logger.http('http: ', dto);
-  //   this.logger.verbose('verbose: ', dto);
-  //   this.logger.debug('debug: ', dto);
-  //   this.logger.silly('silly: ', dto);
+  //   this.logging.error('error: ', dto);
+  //   this.logging.warn('warn: ', dto);
+  //   this.logging.info('info: ', dto);
+  //   this.logging.http('http: ', dto);
+  //   this.logging.verbose('verbose: ', dto);
+  //   this.logging.debug('debug: ', dto);
+  //   this.logging.silly('silly: ', dto);
   // }
 
   // private printLoggerServiceLog(dto) {
   //   try {
   //     throw new InternalServerErrorException('test');
   //   } catch (e) {
-  //     this.logger.error('error: ' + JSON.stringify(dto), e.stack);
+  //     this.logging.error('error: ' + JSON.stringify(dto), e.stack);
   //   }
-  //   this.logger.warn('warn: ' + JSON.stringify(dto));
-  //   this.logger.log('log: ' + JSON.stringify(dto));
-  //   this.logger.verbose('verbose: ' + JSON.stringify(dto));
-  //   this.logger.debug('debug: ' + JSON.stringify(dto));
+  //   this.logging.warn('warn: ' + JSON.stringify(dto));
+  //   this.logging.log('log: ' + JSON.stringify(dto));
+  //   this.logging.verbose('verbose: ' + JSON.stringify(dto));
+  //   this.logging.debug('debug: ' + JSON.stringify(dto));
   // }
 }

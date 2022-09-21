@@ -1,19 +1,12 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import emailConfig from './config/emailConfig';
 import { validationSchema } from './config/validationSchema';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LoggerMiddleware } from './logger/logger.middleware';
-import { Logger2Middleware } from './logger/logger.middleware2';
-import { UsersController } from './users/users.controller';
 import authConfig from './config/authConfig';
 import { ExceptionModule } from './exception/exception.module';
+import { LoggingModule } from './logging/logging.module';
 
 @Module({
   imports: [
@@ -50,15 +43,17 @@ import { ExceptionModule } from './exception/exception.module';
     //   ],
     // }),
     ExceptionModule,
+    LoggingModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): any {
-    consumer
-      .apply(LoggerMiddleware, Logger2Middleware)
-      .exclude({ path: 'users', method: RequestMethod.GET })
-      .forRoutes(UsersController);
-  }
-}
+// export class AppModule implements NestModule {
+// configure(consumer: MiddlewareConsumer): any {
+//   consumer
+//     .apply(LoggerMiddleware, Logger2Middleware)
+//     .exclude({ path: 'users', method: RequestMethod.GET })
+//     .forRoutes(UsersController);
+// }
+// }
+export class AppModule {}

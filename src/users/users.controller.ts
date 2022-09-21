@@ -12,15 +12,21 @@ import {
 import { CreateUserDto } from './dto/create-user-dto';
 import { UserLoginDto } from './dto/user-login-dto';
 import { VerifyEmailDto } from './dto/verify-email-dto';
-import { UsersService } from './users.service';
 import { UserInfo } from './UserInfo';
 import { AuthGuard } from '../auth.guard';
+import { CreateUserCommand } from './command/create-user.command';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { GetUserInfoQuery } from './query/get-user-info.query';
+import { LoginCommand } from './command/login.command';
+import { VerifyEmailCommand } from './command/verify-email.command';
 
 @Controller('users')
 export class UsersController {
   constructor(
-    private readonly usersService: UsersService, // @Inject(WINSTON_MODULE_PROVIDER) private readonly logging: WinstonLogger, // @Inject(WINSTON_MODULE_NEST_PROVIDER) // private readonly logging: LoggerService,
+    // private readonly usersService: UsersService, // @Inject(WINSTON_MODULE_PROVIDER) private readonly logging: WinstonLogger, // @Inject(WINSTON_MODULE_NEST_PROVIDER) // private readonly logging: LoggerService,
     @Inject(Logger) private readonly logger: LoggerService,
+    private queryBus: QueryBus,
+    private commandBus: CommandBus,
   ) {}
 
   @Post()
@@ -28,27 +34,37 @@ export class UsersController {
     // this.printWinstonLog(dto);
     // this.printLoggerServiceLog(dto);
     const { name, email, password } = dto;
-    await this.usersService.createUser(name, email, password);
+    // await this.usersService.createUser(name, email, password);
+
+    const command = new CreateUserCommand(name, email, password);
+
+    return this.commandBus.execute(command);
   }
 
   @Post('/email-verify')
   async verifyEmail(@Body() dto: VerifyEmailDto): Promise<string> {
     const { signupVerifyToken } = dto;
 
-    return await this.usersService.verifyEmail(signupVerifyToken);
+    const command = new VerifyEmailCommand(signupVerifyToken);
+
+    return await this.commandBus.execute(command);
   }
 
   @Post('/login')
   async login(@Body() dto: UserLoginDto): Promise<string> {
     const { email, password } = dto;
 
-    return await this.usersService.login(email, password);
+    const command = new LoginCommand(email, password);
+
+    return await this.commandBus.execute(command);
   }
 
   @UseGuards(AuthGuard)
   @Get('/:id')
   async getUserInfo(@Param('id') userId: string): Promise<UserInfo> {
-    return await this.usersService.getUserInfo(userId);
+    const getUserInfoQuery = new GetUserInfoQuery(userId);
+
+    return this.queryBus.execute(getUserInfoQuery);
   }
 
   // private printWinstonLog(dto) {

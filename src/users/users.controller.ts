@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user-dto';
 import { UserLoginDto } from './dto/user-login-dto';
 import { VerifyEmailDto } from './dto/verify-email-dto';
 import { UsersService } from './users.service';
 import { UserInfo } from './UserInfo';
+import { AuthGuard } from '../auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -29,6 +30,7 @@ export class UsersController {
     return await this.usersService.login(email, password);
   }
 
+  @UseGuards(AuthGuard)
   @Get('/:id')
   async getUserInfo(@Param('id') userId: string): Promise<UserInfo> {
     return await this.usersService.getUserInfo(userId);

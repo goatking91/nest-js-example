@@ -1,0 +1,16 @@
+version: '3.7'
+
+volumes:
+  db-data:
+    external: false
+
+services:
+  db:
+    image: mysql:8.0.30
+    environment:
+      MYSQL_ROOT_PASSWORD: q12we34r
+      TZ: Asia/Seoul
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql

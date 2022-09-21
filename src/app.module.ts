@@ -7,6 +7,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import authConfig from './config/authConfig';
 import { ExceptionModule } from './exception/exception.module';
 import { LoggingModule } from './logging/logging.module';
+import { HealthCheckController } from './health-check/health-check.controller';
+import { TerminusModule } from '@nestjs/terminus';
+import { HttpModule } from '@nestjs/axios';
+import { DogHealthIndicator } from './health-check/dog.health';
 
 @Module({
   imports: [
@@ -44,9 +48,11 @@ import { LoggingModule } from './logging/logging.module';
     // }),
     ExceptionModule,
     LoggingModule,
+    TerminusModule,
+    HttpModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [HealthCheckController],
+  providers: [DogHealthIndicator],
 })
 // export class AppModule implements NestModule {
 // configure(consumer: MiddlewareConsumer): any {

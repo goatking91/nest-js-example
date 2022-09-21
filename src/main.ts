@@ -35,13 +35,14 @@ async function bootstrap() {
       ],
     }),
   });
-  // app.use(logger3);
-  // app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
     }),
   );
+  // app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
+  // app.useGlobalFilters(new HttpExceptionFilter()); // 전역 필터 적용
   await app.listen(3000);
 }
+
 bootstrap();

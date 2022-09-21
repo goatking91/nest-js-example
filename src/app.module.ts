@@ -35,6 +35,19 @@ import authConfig from './config/authConfig';
       migrations: [__dirname + '/migrations/*{.ts,.js}'],
       migrationsTableName: 'migrations',
     }),
+    // WinstonModule.forRoot({
+    //   transports: [
+    //     new winston.transports.Console({
+    //       level: process.env.NODE_ENV === 'production' ? 'info' : 'silly',
+    //       format: winston.format.combine(
+    //         winston.format.timestamp(),
+    //         nestWinstonModuleUtilities.format.nestLike('MyApp', {
+    //           prettyPrint: true,
+    //         }),
+    //       ),
+    //     }),
+    //   ],
+    // }),
   ],
   controllers: [],
   providers: [],

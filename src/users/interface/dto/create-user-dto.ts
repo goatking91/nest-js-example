@@ -6,7 +6,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { NotIn } from '../../utils/decorators/not-in';
+import { NotIn } from '../../../utils/decorators/not-in';
 
 export class CreateUserDto {
   // @Transform(({ value, obj }) => {

@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { VerifyAccessTokenCommand } from './verify-access-token.command';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import authConfig from '../../config/authConfig';
+import authConfig from '../../../config/authConfig';
 import { ConfigType } from '@nestjs/config';
 
 interface User {
